@@ -5,7 +5,8 @@
   include("includes/classes/Account.php");
   include("includes/classes/Constants.php");
 
-  $account = new Account();
+  // The $con is a global variable defined in the config.php file
+  $account = new Account($con);
 
   include("includes/handlers/register-handler.php");
   include("includes/handlers/login-handler.php");

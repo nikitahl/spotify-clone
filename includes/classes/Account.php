@@ -1,9 +1,11 @@
 <?php
   class Account {
 
+    private $con;
     private $errorArray;
 
-    public function __construct () {
+    public function __construct ($con) {
+      $this->con = $con;
       $this->errorArray = array();
     }
 
@@ -16,7 +18,7 @@
 
       if (empty($this->errorArray)) {
         //Insert into DB
-        return true;
+        return insertUserDetails($un, $fn, $ln, $em, $pw);
       } else {
         return false;
       }
@@ -27,6 +29,16 @@
         $error = "";
       }
       return "<span class='errorMessage'>$error</span>";
+    }
+
+    private function insertUserDetails ($un, $fn, $ln, $em, $pw) {
+      $encryptedPw = md5($pw); // md5 function for encription
+      $profilePic = "assets/images/profile-pics/profile-pic-placeholder.png";
+      $date = date("Y-m-d");
+
+      // Must have single quotes around query parameters, otherwise it will throw error
+      $result = mysqli_query($this->con, "INSERT INTO users VALUES ('', '$un', '$fn', '$ln', '$em', '$encryptedPw', '$date', '$profilePic')");
+      return $result;
     }
 
     private function validateUsername ($un) {
