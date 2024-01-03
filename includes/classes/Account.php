@@ -18,7 +18,7 @@
 
       if (empty($this->errorArray)) {
         //Insert into DB
-        return insertUserDetails($un, $fn, $ln, $em, $pw);
+        return $this->insertUserDetails($un, $fn, $ln, $em, $pw);
       } else {
         return false;
       }
@@ -37,7 +37,10 @@
       $date = date("Y-m-d");
 
       // Must have single quotes around query parameters, otherwise it will throw error
-      $result = mysqli_query($this->con, "INSERT INTO users VALUES ('', '$un', '$fn', '$ln', '$em', '$encryptedPw', '$date', '$profilePic')");
+      // Default example is not working because empty value for id column causes an error, type is string but should be int
+      // $result = mysqli_query($this->con, "INSERT INTO users VALUES ('', '$un', '$fn', '$ln', '$em', '$encryptedPw', '$date', '$profilePic')");
+      // Need to omit id from the column list and values when inserting records, because it has an AUTO_INCREMENT
+      $result = mysqli_query($this->con, "INSERT INTO users (username, firstName, lastName, email, password, signUpDate, profilePic) VALUES ('$un', '$fn', '$ln', '$em', '$encryptedPw', '$date', '$profilePic')");
       return $result;
     }
 
