@@ -26,7 +26,21 @@
     <div id="nowPlayingBarContainer">
       <div id="nowPlayingBar">
 
-        <div id="nowPlayingLeft"></div>
+        <div id="nowPlayingLeft">
+          <div class="content">
+            <span class="albumLink">
+              <img class="albumArtwork" src="https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2011/11/square-format-01.jpg" alt="">
+            </span>
+            <div class="trackInfo">
+              <span class="trackName">
+                <span>Happy Birthday</span>
+              </span>
+              <span class="artistName">
+                <span>John Doe</span>
+              </span>
+            </div>
+          </div>
+        </div>
 
         <div id="nowPlayingCenter">
           <div class="content playerControls">
@@ -53,13 +67,28 @@
 
             <div class="playbackBar">
               <span class="progressTime current">0:00</span>
-              <div class="progressBar"></div>
+              <div class="progressBar">
+                <div class="progressBarBg">
+                  <div class="progress"></div>
+                </div>
+              </div>
               <span class="progressTime remaining">0:00</span>
             </div>
           </div>
         </div>
 
-        <div id="nowPlayingRight"></div>
+        <div id="nowPlayingRight">
+          <div class="volumeBar">
+            <button class="controlButton volume" title="Volume">
+              <i class="fa-solid fa-volume-high"></i> 
+            </button>
+            <div class="progressBar">
+                <div class="progressBarBg">
+                  <div class="progress"></div>
+                </div>
+              </div>
+          </div>
+        </div>
 
       </div>
     </div>
