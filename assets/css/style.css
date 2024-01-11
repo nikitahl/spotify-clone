@@ -10,6 +10,12 @@ body {
   color: #fff;
 }
 
+body {
+  background-color: #181818;
+  font-size: 14px;
+  min-width: 720px;
+}
+
 #nowPlayingBarContainer {
   background-color: #282828;
   position: fixed;
@@ -195,4 +201,14 @@ body {
 
 .navItemLink:hover {
   color: #fff;
+}
+
+#mainViewContainer {
+  margin-left: 220px;
+  padding-bottom: 90px;
+  width: calc(100% - 220px);
+}
+
+#mainContent {
+  padding: 0 20px;
 }
