@@ -186,7 +186,7 @@ body {
   display: block;
   letter-spacing: 1px;
   position: relative;
-  vertical-align: middle;
+  /* vertical-align: middle; */
 }
 
 .searchIcon {
@@ -243,4 +243,36 @@ body {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.entityInfo {
+  padding: 40px 0 10px 0;
+  display: inline-block;
+  width: 100%;
+}
+
+.leftSection {
+  float: left;
+  width: 30%;
+  max-width: 250px;
+}
+
+.leftSection img {
+  max-width: 100%;
+}
+
+.rightSection {
+  box-sizing: border-box;
+  float: left;
+  width: 70%;
+  padding: 5px 10px 5px 40px;
+}
+
+.entityInfo h2 {
+  margin-top: 0;
+}
+
+.entityInfo p {
+  color: #939393;
+  font-weight: 200;
 }
