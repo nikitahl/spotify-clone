@@ -1,3 +1,43 @@
+<?php
+  $songQuery = mysqli_query($con, "SELECT id FROM songs ORDER BY RAND() LIMIT 10");
+
+  $resultArray = array();
+  while ($row = mysqli_fetch_array($songQuery)) {
+    array_push($resultArray, $row['id']);
+  }
+
+  $jsonArray = json_encode($resultArray);
+
+?>
+
+<script>
+  $(document).ready(function() {
+    currentPlaylist = <?php echo $jsonArray ?>;
+    audioElement = new Audio();
+
+    setTrack(currentPlaylist[0], currentPlaylist, false);
+  });
+
+  function setTrack(trackId, newPlaylist, play) {
+    audioElement.setTrack('assets/music/bensound-clearday.mp3');
+    if (play) {
+      audioElement.play();
+    }
+  }
+
+  function playSong () {
+    $(".play").hide();
+    $(".pause").show();
+    audioElement.play();
+  }
+
+  function pauseSong () {
+    $(".play").show();
+    $(".pause").hide();
+    audioElement.pause();
+  }
+</script>
+
 <div id="nowPlayingBarContainer">
   <div id="nowPlayingBar">
 
@@ -26,10 +66,10 @@
           <button class="controlButton previous" title="Previous">
             <i class="fa-solid fa-arrow-left"></i>
           </button>
-          <button class="controlButton play" title="Play">
+          <button class="controlButton play" title="Play" onclick="playSong()">
             <i class="fa-solid fa-play"></i>
           </button>
-          <button class="controlButton pause" title="Pause" style="display:none">
+          <button class="controlButton pause" title="Pause" style="display:none" onclick="pauseSong()">
             <i class="fa-solid fa-pause"></i>
           </button>
           <button class="controlButton next" title="Next">
