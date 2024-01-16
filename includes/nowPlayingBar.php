@@ -19,7 +19,24 @@
   });
 
   function setTrack(trackId, newPlaylist, play) {
-    audioElement.setTrack('assets/music/bensound-clearday.mp3');
+    $.post("includes/handlers/ajax/getSongJson.php", { songId: trackId }, function(data) {
+      var track = JSON.parse(data);
+      $(".trackName span").text(track.title);
+
+      $.post("includes/handlers/ajax/getArtistJson.php", { artistId: track.artist }, function(data) {
+        var artist = JSON.parse(data);
+        $(".artistName span").text(artist.name);
+      });
+
+      $.post("includes/handlers/ajax/getAlbumJson.php", { albumId: track.album }, function(data) {
+        var album = JSON.parse(data);
+        $(".albumArtwork").attr("src", album.artworkPath);
+      });
+
+      audioElement.setTrack(track.path);
+      audioElement.play();
+    });
+ 
     if (play) {
       audioElement.play();
     }
@@ -44,11 +61,11 @@
     <div id="nowPlayingLeft">
       <div class="content">
         <span class="albumLink">
-          <img class="albumArtwork" src="https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2011/11/square-format-01.jpg" alt="">
+          <img class="albumArtwork" src="" alt="Album artwork">
         </span>
         <div class="trackInfo">
           <span class="trackName">
-            <span>Happy Birthday</span>
+            <span></span>
           </span>
           <span class="artistName">
             <span>John Doe</span>
