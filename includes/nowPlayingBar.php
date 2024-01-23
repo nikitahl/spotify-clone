@@ -13,6 +13,7 @@
 <script>
   $(document).ready(function() {
     currentPlaylist = <?php echo $jsonArray ?>;
+
     audioElement = new Audio();
     setTrack(currentPlaylist[0], currentPlaylist, false);
     updateVolumeProgressBar(audioElement.audio);
@@ -68,7 +69,53 @@
     audioElement.setTime(seconds);
   }
 
+  function prevSong() {
+    if (audioElement.audio.currentTime >=3 || currentIndex === 0) {
+      audioElement.setTime(0);
+    } else {
+      currentIndex = currentIndex - 1;
+      setTrack(currentPlaylist[currentIndex], currentPlaylist, true);
+    }
+  }
+  function nextSong() {
+    if (repeat) {
+      audioElement.setTime(0);
+      playSong();
+      return;
+    }
+    if (currentIndex === currentPlaylist.length - 1) {
+      currentIndex = 0;
+    } else {
+      currentIndex++;
+    }
+
+    var trackToPlay = currentPlaylist[currentIndex];
+    setTrack(trackToPlay, currentPlaylist, true);
+  }
+
+  function setRepeat() {
+    repeat = !repeat;
+    var iconColor = repeat ? "#47d819" : "#aaa";
+    $(".controlButton.repeat i").css({"color": iconColor});
+  }
+
+  function setMute() {
+    audioElement.audio.muted = !audioElement.audio.muted;
+    var iconClass = audioElement.audio.muted ? "fa-volume-xmark" : "fa-volume-high";
+    var iconClassRemove = audioElement.audio.muted ? "fa-volume-high" : "fa-volume-xmark";
+
+    $(".controlButton.volume i").addClass(iconClass).removeClass(iconClassRemove);
+  }
+
+  function setShuffle() {
+    shuffle = !shuffle;
+    var iconColor = shuffle ? "#47d819" : "#aaa";
+    $(".controlButton.shuffle i").css({"color": iconColor});
+  }
+
   function setTrack(trackId, newPlaylist, play) {
+    currentIndex = currentPlaylist.indexOf(trackId);
+    pauseSong();
     $.post("includes/handlers/ajax/getSongJson.php", { songId: trackId }, function(data) {
       var track = JSON.parse(data);
       $(".trackName span").text(track.title);
@@ -130,10 +177,10 @@
     <div id="nowPlayingCenter">
       <div class="content playerControls">
         <div class="buttons">
-          <button class="controlButton shuffle" title="Shuffle">
+          <button class="controlButton shuffle" title="Shuffle" onclick="setShuffle()">
             <i class="fa-solid fa-shuffle"></i>
           </button>
-          <button class="controlButton previous" title="Previous">
+          <button class="controlButton previous" title="Previous" onclick="prevSong()">
             <i class="fa-solid fa-arrow-left"></i>
           </button>
           <button class="controlButton play" title="Play" onclick="playSong()">
@@ -142,10 +189,10 @@
           <button class="controlButton pause" title="Pause" style="display:none" onclick="pauseSong()">
             <i class="fa-solid fa-pause"></i>
           </button>
-          <button class="controlButton next" title="Next">
+          <button class="controlButton next" title="Next" onclick="nextSong()">
             <i class="fa-solid fa-arrow-right"></i>
           </button>
-          <button class="controlButton repeat" title="Repeat">
+          <button class="controlButton repeat" title="Repeat" onclick="setRepeat()">
             <i class="fa-solid fa-repeat"></i>
           </button>
         </div>
@@ -164,7 +211,7 @@
 
     <div id="nowPlayingRight">
       <div class="volumeBar">
-        <button class="controlButton volume" title="Volume">
+        <button class="controlButton volume" title="Volume" onclick="setMute()">
           <i class="fa-solid fa-volume-high"></i> 
         </button>
         <div class="progressBar">
