@@ -41,7 +41,8 @@ $artist = $album->getArtist();
                   <span class='artistName'>" . $albumArtist->getName() . "</span>
                 </div>
                 <div class='trackOptions'>
-                  <i class='fa-solid fa-ellipsis'></i>
+                  <input type='hidden' class='songId' value='" . $albumSong->getId() . "'>
+                  <i class='fa-solid fa-ellipsis optionsButton' onclick='showOptionsMenu(this)'></i>
                 </div>
                 <div class='trackDuration'>
                   <span class='duration'>" . $albumSong->getDuration() . "</span>
@@ -57,3 +58,9 @@ $artist = $album->getArtist();
     </script>
   </ul>
 </div>
+
+
+<nav class="optionsMenu">
+  <input type="hidden" class="songId">
+  <?php echo Playlist::getPlaylistsDropdown($con, $userLoggedIn->getUserName()); ?>
+</nav>

@@ -44,7 +44,8 @@ $owner = new User($con, $playlist->getOwner());
                   <span class='artistName'>" . $songArtist->getName() . "</span>
                 </div>
                 <div class='trackOptions'>
-                  <i class='fa-solid fa-ellipsis'></i>
+                  <input type='hidden' class='songId' value='" . $playlistSong->getId() . "'>
+                  <i class='fa-solid fa-ellipsis optionsButton' onclick='showOptionsMenu(this)'></i>
                 </div>
                 <div class='trackDuration'>
                   <span class='duration'>" . $playlistSong->getDuration() . "</span>
@@ -60,3 +61,9 @@ $owner = new User($con, $playlist->getOwner());
     </script>
   </ul>
 </div>
+
+<nav class="optionsMenu">
+  <input type="hidden" class="songId">
+  <?php echo Playlist::getPlaylistsDropdown($con, $userLoggedIn->getUserName()); ?>
+  <div class="item" onclick="removeFromPlaylist(this, '<?php echo $playlistId; ?>')">Remove from playlist</div>
+</nav>
