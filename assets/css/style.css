@@ -428,3 +428,17 @@ body {
   display: block;
   margin: 15px;
 }
+
+.buttonItems .button {
+  display: block;
+  margin: 0 auto 20px;
+}
+
+.playlistsContainer {
+  padding: 10px;
+}
+
+.playlistImage {
+  border: 2px solid #484848;
+  padding: 20px;
+}
