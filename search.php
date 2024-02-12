@@ -14,7 +14,10 @@
 </div>
 
 <script>
-  $(".searchInput").focus();
+  var searchInput = $(".searchInput");
+  var end = searchInput[0].value.length;
+  searchInput[0].setSelectionRange(end, end);
+  searchInput.focus();
 
   $(function() {
     $(".searchInput").keyup(function() {
